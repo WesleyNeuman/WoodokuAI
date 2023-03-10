@@ -1,0 +1,10 @@
+The state is made up by the current board and the pieces available
+
+Any piece can be defined by a 5 x 5 array
+
+The goal of this model is to survive as long as possible. I believe that I can teach the model to do this by rewarding it for making moves that are unlikely to result in a game over situation.
+This changes how we represent the MCTS as a leaf will no longer contain a win or loss, but will instead only be a terminus. Therefore, I can represent the reward of a given node as the average
+turns until a terminus of the child nodes (which will cascade).
+
+The other tricky part about this model is that the game can easily return to a state that it's already been to. In this sense, I'll need to set up the MCTS to be more like an MCWS (Monte-Carlo Web Search).
+I don't see this as a problem though as it shouldn't impact my ability to define the reward based on the life expectancy of a game.
