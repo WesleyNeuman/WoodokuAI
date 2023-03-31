@@ -1,5 +1,5 @@
 import numpy as np
-from pieces import Piece
+from game.piece import Piece
 from board import *
 
 class Game:

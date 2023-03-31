@@ -348,12 +348,12 @@ def define_pieces() -> List[Piece]:
         [0, 0, 0, 1, 0]
     ])))
     
-    for piece in pieces:
-        for i in range(0, 5):
-            for j in range(0, 5):
-                print(piece.spaces[i][j], end='')
-            print()
-        print()
+    # for piece in pieces:
+    #     for i in range(0, 5):
+    #         for j in range(0, 5):
+    #             print(piece.spaces[i][j], end='')
+    #         print()
+    #     print()
 
     return pieces
 
