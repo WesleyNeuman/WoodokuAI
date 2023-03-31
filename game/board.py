@@ -1,9 +1,12 @@
-import numpy as np
-from game import piece
+from game.piece import Piece
 
+import numpy as np
+import logging
 
 class Board:
     spaces: np.array
+    height = 9
+    length = 9
 
     def __init__(self):
         self.spaces = self.generate_empty_board()
@@ -23,8 +26,31 @@ class Board:
         ])
     
 
-    def play_piece(self, piece: piece.Piece, x, y):
-        self.spaces[x:x+5, y:y+5] = piece.spaces
+    def play_piece(self, piece: Piece, x, y):
+        height = x+piece.height()
+        length = y+piece.length()
+
+        if height > self.height:
+            logging.warning("Cannot play piece - X coord of {0} is larger than the limit of {1}".format(height, self.height))
+            return
+        elif x < 0:
+            logging.warning("Cannot play piece - X coord of {0} is less than 0".format(x, 0))
+            return
+        elif length > self.length:
+            logging.warning("Cannot play piece - Y coord of {0} is larger than the limit of {1}".format(length, self.length))
+            return
+        elif y < 0:
+            logging.warning("Cannot play piece - Y coord of {0} is less than 0".format(y, 0))
+            return
+        
+        candidate = np.add(self.spaces[x:height, y:length], piece.spaces)
+
+        if candidate.max() > 1:
+            logging.warning("Cannot play piece - Other pieces obstruct placement")
+            return
+        else:
+            logging.info("Piece played successfully")
+            self.spaces[x:height, y:length] = candidate
     
 
     def get_region_sum(self, slicer):
