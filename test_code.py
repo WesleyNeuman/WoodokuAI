@@ -1,13 +1,13 @@
-from game import board
-from game import piece
+from game.board import Board
+from game.piece import *
+from game.game import Game
 
-b = board.Board()
-print(b.spaces)
+import logging
+import os
 
-pieces = piece.define_pieces()
+if os.path.exists('./Debug.log'):
+    os.remove('./Debug.log')
+logging.basicConfig(filename='./Debug.log', level=logging.INFO)
 
-piece2play = pieces[2]
-print(piece2play.spaces)
+game = Game()
 
-b.play_piece(piece2play, 0, 0)
-print(b.spaces)
