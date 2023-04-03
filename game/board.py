@@ -32,25 +32,26 @@ class Board:
 
         if height > self.height:
             logging.warning("Cannot play piece - X coord of {0} is larger than the limit of {1}".format(height, self.height))
-            return
+            return False
         elif x < 0:
             logging.warning("Cannot play piece - X coord of {0} is less than 0".format(x, 0))
-            return
+            return False
         elif length > self.length:
             logging.warning("Cannot play piece - Y coord of {0} is larger than the limit of {1}".format(length, self.length))
-            return
+            return False
         elif y < 0:
             logging.warning("Cannot play piece - Y coord of {0} is less than 0".format(y, 0))
-            return
+            return False
         
         candidate = np.add(self.spaces[x:height, y:length], piece.spaces)
 
         if candidate.max() > 1:
             logging.warning("Cannot play piece - Other pieces obstruct placement")
-            return
+            return False
         else:
             logging.info("Piece played successfully")
             self.spaces[x:height, y:length] = candidate
+            return True
     
 
     def get_region_sum(self, slicer):
