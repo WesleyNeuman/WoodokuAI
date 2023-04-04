@@ -2,15 +2,37 @@ import numpy as np
 
 class Piece:
     spaces: np.array
+    nn_spaces: np.array
 
     def __init__(self, spaces):
         self.spaces = spaces
+        self.nn_spaces = self.get_nn_spaces()
+
 
     def height(self):
         return self.spaces.shape[0]
     
+
     def length(self):
         return self.spaces.shape[1]
+    
+    
+    def get_nn_spaces(self):
+        spaces = np.array([
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0]
+        ])
+
+        spaces[0:self.height(), 0:self.length()] = self.spaces
+        return spaces
+
 
 
 # Pieces are defined in such a way that every piece has a (0, 0) that's used as the primary placement point
@@ -270,5 +292,9 @@ def define_pieces():
     #     print()
 
     return pieces
+
+
+
+
 
     

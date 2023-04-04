@@ -5,8 +5,21 @@ import numpy as np
 import random
 from typing import List
 import math
+import os
 
 points_for_scoring = 9
+
+empty_9x9 = np.array([
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0]
+        ])
 
 class Game:
     score: int
@@ -91,6 +104,33 @@ class Game:
         ]
     
 
+    def game_state(self):
+        piece1 = None
+        piece2 = None
+        piece3 = None
+
+        if len(self.round_pieces) >= 3:
+            piece3 = self.round_pieces[2].nn_spaces
+        else:
+            piece3 = empty_9x9
+
+        if len(self.round_pieces) >= 2:
+            piece2 = self.round_pieces[1].nn_spaces
+        else:
+            piece2 = empty_9x9
+
+        piece1 = self.round_pieces[0].nn_spaces
+
+        state = np.array([
+            self.board.spaces,
+            piece1,
+            piece2,
+            piece3
+        ])
+        
+        return state
+    
+
     def q_playable_moves(self):
         open = np.where(self.board.spaces == 0)
         open_coords = np.vstack((open[0], open[1])).T
@@ -106,6 +146,8 @@ class Game:
                     return True
                 
         return False
+    
+    
 
 
 def q_eligible_move(board_spaces, piece: Piece, space_to_check):

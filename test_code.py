@@ -9,5 +9,7 @@ if os.path.exists('./Debug.log'):
     os.remove('./Debug.log')
 logging.basicConfig(filename='./Debug.log', level=logging.INFO)
 
+
 game = Game()
 
+print(game.game_state())
